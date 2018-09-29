@@ -196,6 +196,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.nav_about:
                 startActivity(new Intent(DashboardActivity.this,AboutActivity.class));
+                finish();
                 break;
             case R.id.nav_logout:
                 ChoiceActivity.teacherlogin=false;
