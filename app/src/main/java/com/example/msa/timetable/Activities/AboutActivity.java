@@ -31,6 +31,7 @@ public class AboutActivity extends AppCompatActivity {
         developers.add(new Developer("Mohammad Suhaib Ahmed",R.drawable.suhaib));
         developers.add(new Developer("Ankur Pandey",R.drawable.ankur));
         developers.add(new Developer("Sanika Haval",R.drawable.sanika));
+        developers.add(new Developer("Anam Sayed",R.drawable.anam));
 
         listView=(ListView)findViewById(R.id.listview);
         DeveloperAdaptor adaptor = new DeveloperAdaptor(this,developers);

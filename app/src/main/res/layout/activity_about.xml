@@ -19,24 +19,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
         <ImageView
             android:id="@+id/icon"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:src="@mipmap/ic_launcher"
-            android:layout_marginTop="10dp"/>
+            />
 
         <TextView
             android:id="@+id/about"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/icon"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="@string/About_page"
             android:textColor="#252525"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:textStyle="italic"
             android:gravity="center"/>
 
@@ -49,7 +51,7 @@
             android:text="Developers :"
             android:textColor="#250425"
             android:textStyle="bold"
-            android:textSize="24sp" />
+            android:textSize="18sp" />
 
         <ListView
             android:id="@+id/listview"
@@ -60,10 +62,9 @@
             android:divider="@null"
             android:dividerHeight="0dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="10dp">
+            >
 
         </ListView>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
