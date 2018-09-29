@@ -30,13 +30,13 @@
         android:layout_weight="1"
         android:layout_marginBottom="20dp"
         app:cardCornerRadius="5dp"
-        app:cardElevation="8dp"
+        app:cardElevation="3dp"
         >
         <LinearLayout
             android:id="@+id/teacher_card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/teacher"
+            android:background="@drawable/gradient_theme"
             android:gravity="center">
             <TextView
                 android:layout_width="wrap_content"
@@ -53,14 +53,14 @@
         android:layout_weight="1"
         android:layout_marginBottom="20dp"
         app:cardCornerRadius="5dp"
-        app:cardElevation="8dp"
+        app:cardElevation="3dp"
         >
 
         <LinearLayout
             android:id="@+id/student_card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/student"
+            android:background="@drawable/gradient_theme"
             android:gravity="center">
             <TextView
                 android:layout_width="wrap_content"
