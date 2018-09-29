@@ -19,4 +19,9 @@
         <item>Theory</item>
         <item>Practical</item>
     </string-array>
+<string-array name="Member_info">
+    <item>Mohammad Suhaib Ahmed</item>
+    <item>Ankur Pandey</item>
+    <item>Sanika Havale</item>
+</string-array>
 </resources>

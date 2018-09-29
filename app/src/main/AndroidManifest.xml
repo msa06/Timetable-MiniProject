@@ -21,6 +21,7 @@
         </activity>
         <activity android:name="com.example.msa.timetable.Activities.DashboardActivity" />
         <activity android:name="com.example.msa.timetable.Activities.ChoiceActivity" />
+        <activity android:name=".Activities.AboutActivity" android:parentActivityName=".Activities.DashboardActivity"/>
         <activity android:name="com.example.msa.timetable.Activities.InputActivity"
             android:parentActivityName="com.example.msa.timetable.Activities.DashboardActivity"></activity>
     </application>

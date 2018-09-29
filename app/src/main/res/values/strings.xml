@@ -24,4 +24,10 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="edit_place_text">Place</string>
 
+    <!-- About String-->
+    <string name="About_page">
+        <b>EaSy</b> is the most beautiful and intuitive app for managing your school or university life.
+        Save your timetable once, because <b>EaSy</b> syncs across all your Android devices.
+    </string>
+
 </resources>

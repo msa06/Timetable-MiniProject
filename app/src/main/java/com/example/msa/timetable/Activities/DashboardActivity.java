@@ -195,7 +195,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 Toast.makeText(this, "Settings!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_about:
-                Toast.makeText(this, "About", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(DashboardActivity.this,AboutActivity.class));
                 break;
             case R.id.nav_logout:
                 ChoiceActivity.teacherlogin=false;
