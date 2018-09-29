@@ -14,6 +14,7 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,11 +22,11 @@
         android:padding="16dp">
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
             android:src="@mipmap/ic_launcher"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginTop="10dp"/>
 
         <TextView
             android:id="@+id/about"
@@ -34,8 +35,9 @@
             android:layout_below="@id/icon"
             android:layout_marginTop="20dp"
             android:text="@string/About_page"
-            android:textColor="#350635"
+            android:textColor="#252525"
             android:textSize="18sp"
+            android:textStyle="italic"
             android:gravity="center"/>
 
         <TextView
@@ -43,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/about"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:text="Developers :"
             android:textColor="#250425"
             android:textStyle="bold"
@@ -52,15 +54,35 @@
         <ListView
             android:id="@+id/listview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_below="@id/tag"
-            android:layout_marginTop="16dp"
-            android:paddingLeft="16dp"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="10dp">
 
         </ListView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="2dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Made with Love"
+                android:textSize="14sp"
+                android:layout_marginRight="2dp"/>
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/heart"
+                android:layout_marginLeft="2dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 

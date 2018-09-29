@@ -7,7 +7,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
+import com.example.msa.timetable.Data.DeveloperAdaptor;
+import com.example.msa.timetable.Model.Developer;
 import com.example.msa.timetable.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -22,8 +27,13 @@ public class AboutActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
+        List<Developer> developers = new ArrayList<>();
+        developers.add(new Developer("Mohammad Suhaib Ahmed",R.drawable.suhaib));
+        developers.add(new Developer("Ankur Pandey",R.drawable.ankur));
+        developers.add(new Developer("Sanika Haval",R.drawable.sanika));
+
         listView=(ListView)findViewById(R.id.listview);
-        ArrayAdapter<CharSequence> aa = ArrayAdapter.createFromResource(this, R.array.Member_info, android.R.layout.simple_list_item_1);
-        listView.setAdapter(aa);
+        DeveloperAdaptor adaptor = new DeveloperAdaptor(this,developers);
+        listView.setAdapter(adaptor);
     }
 }
