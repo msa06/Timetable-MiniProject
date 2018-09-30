@@ -2,6 +2,7 @@ package com.example.msa.timetable.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class WelcomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListner;
-    Button nextbtn;
+//    Button nextbtn;
 
 
     @Override
@@ -26,8 +27,9 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        nextbtn = (Button) findViewById(R.id.next_button);
-        //Getting Firebase Instance
+
+//        nextbtn = (Button) findViewById(R.id.next_button);
+//        Getting Firebase Instance
         mAuth = FirebaseAuth.getInstance();
         mAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -36,16 +38,22 @@ public class WelcomeActivity extends AppCompatActivity {
                     startActivity(new Intent(WelcomeActivity.this, DashboardActivity.class));
                     finish();
                 }
+                else{
+                    startActivity(new Intent(WelcomeActivity.this, ChoiceActivity.class));
+                    finish();
+                }
             }
         };
 
-        nextbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(WelcomeActivity.this, ChoiceActivity.class));
-                finish();
-            }
-        });
+
+
+//        nextbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(WelcomeActivity.this, ChoiceActivity.class));
+//                finish();
+//            }
+//        });
 
     }
 }

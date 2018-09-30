@@ -55,7 +55,16 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-
+        //User mAuth Listner
+        mAuthListner = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser()==null){
+                    startActivity(new Intent(DashboardActivity.this,ChoiceActivity.class));
+                    finish();
+                }
+            }
+        };
 
         //Adding Toolbar
         mytoolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -71,15 +80,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }
         //Auth Listner
 
-        mAuthListner = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser()==null){
-                    startActivity(new Intent(DashboardActivity.this,WelcomeActivity.class));
-                    finish();
-                }
-            }
-        };
+
 
         //Setting Up the ViewPager
         setViewPager();
