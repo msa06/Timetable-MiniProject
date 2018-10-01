@@ -72,9 +72,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser()==null){
+                    Toast.makeText(DashboardActivity.this, "User Not Present", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(DashboardActivity.this,ChoiceActivity.class));
                     finish();
-                    Toast.makeText(DashboardActivity.this, "User Not Present", Toast.LENGTH_SHORT).show();
+
                 }
                 else {
                     Toast.makeText(DashboardActivity.this, "User Present", Toast.LENGTH_SHORT).show();
