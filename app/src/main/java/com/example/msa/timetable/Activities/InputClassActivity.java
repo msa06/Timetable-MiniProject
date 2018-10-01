@@ -30,6 +30,7 @@ import java.util.Random;
 
 import static com.example.msa.timetable.Activities.ChoiceActivity.mUserAccess;
 
+
 public class InputClassActivity extends AppCompatActivity {
     private Toolbar mytoolbar;
     private EditText classname,teacher,theoryperiod,practicalperiod;
@@ -39,9 +40,11 @@ public class InputClassActivity extends AppCompatActivity {
     private ArrayList<String> theoryperiods = new ArrayList<>();
     private ArrayList<String> practicalperiods = new ArrayList<>() ;
     private ArrayList<String> classes = new ArrayList<>();
-    private String randomcode;
+    private String randomcode ;
+
 
     //Firebase
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mClassDatabaseReference,mUserDatabaseReference;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -70,10 +73,17 @@ public class InputClassActivity extends AppCompatActivity {
         //Firebase
         mAuth =FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-        mClassDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Classes");
-        mUserDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid());
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mClassDatabaseReference = mFirebaseDatabase.getReference().child("Classes");
+        mUserDatabaseReference = mFirebaseDatabase.getReference().child("Users").child(mUser.getUid());
+
+
+
         //GenerateRandomCode
         randomcode = createRandomCode();
+        //Adding the new Code
+
+
         teacheradd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,6 +180,7 @@ public class InputClassActivity extends AppCompatActivity {
         User userdata = new User(uid,name,email,access,classes);
         return userdata;
     }
+
 
     private void createClass() {
         String name = classname.getText().toString();
