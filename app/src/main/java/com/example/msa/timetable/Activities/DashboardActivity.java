@@ -46,7 +46,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private Toolbar mytoolbar;
     private TextView username,useremail;
     private CircularImageView userimage;
-    private ArrayList<Class> classes;
+    private ArrayList<String> classes;
 
     @Override
     protected void onStart() {
@@ -68,8 +68,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         mUserDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
         //Reference
-        classes = new ArrayList<>();
-        classes.add(new Class());
+        classes = new ArrayList<String>();
 
         //User mAuth Listner
         //Auth Listner
@@ -218,7 +217,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         detachedDatabaseReadListner();
     }
 
-    private void saveUserData(FirebaseUser user) {
+    public void saveUserData(FirebaseUser user) {
         String uid = user.getUid();
         String name = user.getDisplayName();
         String email = user.getEmail();
@@ -226,6 +225,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         User userdata = new User(uid,name,email,access,classes);
         mUserDatabaseReference.child(uid).setValue(userdata);
     }
+
     private void attachDatabaseReadListner() {
         if (mValueEventListner == null){
             mValueEventListner = new ValueEventListener() {

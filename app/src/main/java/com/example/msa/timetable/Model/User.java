@@ -7,12 +7,12 @@ public class User {
     private String name;
     private String emailid;
     private int access;
-    private ArrayList<Class> classes;
+    private ArrayList<String> classes;
 
     public User() {
     }
 
-    public User(String uid, String name, String emailid, int access, ArrayList<Class> classes) {
+    public User(String uid, String name, String emailid, int access, ArrayList<String> classes) {
         this.uid = uid;
         this.name = name;
         this.emailid = emailid;
@@ -36,7 +36,7 @@ public class User {
         return access;
     }
 
-    public ArrayList<Class> getClasses() {
+    public ArrayList<String> getClasses() {
         return classes;
     }
 }
