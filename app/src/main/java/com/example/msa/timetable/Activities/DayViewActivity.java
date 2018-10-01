@@ -29,7 +29,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.Calendar;
 
-public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class DayViewActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListner;
     private DrawerLayout drawer;
@@ -60,7 +60,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser()==null){
-                    startActivity(new Intent(DashboardActivity.this,ChoiceActivity.class));
+                    startActivity(new Intent(DayViewActivity.this,ChoiceActivity.class));
                     finish();
                 }
             }
@@ -73,7 +73,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         //Setting Navigation Drawer
         setNavigationDrawer();
-
+        navigationView.getMenu().getItem(0).setCheckable(true);
+        onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_dayview));
 
         if(ChoiceActivity.studentlogin){
             invalidateOptionsMenu();
@@ -103,7 +104,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         username = (TextView) header.findViewById(R.id.nav_usernametext);
         useremail = (TextView) header.findViewById(R.id.nav_useremailid);
 
-        Glide.with(DashboardActivity.this)
+        Glide.with(DayViewActivity.this)
                 .load(mUser.getPhotoUrl())
                 .into(userimage);
         username.setText(mUser.getDisplayName());
@@ -172,7 +173,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             case R.id.action_add:
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
-                startActivity(new Intent(DashboardActivity.this,InputActivity.class));
+                startActivity(new Intent(DayViewActivity.this,InputActivity.class));
                 return true;
 
             default:
@@ -196,7 +197,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 Toast.makeText(this, "Settings!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_about:
-                startActivity(new Intent(DashboardActivity.this,AboutActivity.class));
+                startActivity(new Intent(DayViewActivity.this,AboutActivity.class));
                 finish();
                 break;
             case R.id.nav_logout:

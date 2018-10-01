@@ -21,15 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.DashboardActivity" />
+        <activity android:name=".Activities.DayViewActivity" />
         <activity android:name=".Activities.ChoiceActivity" />
         <activity
             android:name=".Activities.AboutActivity"
-            android:parentActivityName=".Activities.DashboardActivity" />
+            android:parentActivityName=".Activities.DayViewActivity" />
         <activity
             android:name=".Activities.InputActivity"
-            android:parentActivityName=".Activities.DashboardActivity" />
-        <activity android:name=".Activities.WelcomeActivity"></activity>
+            android:parentActivityName=".Activities.DayViewActivity" />
     </application>
 
 </manifest>

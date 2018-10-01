@@ -199,7 +199,7 @@ public class InputActivity extends AppCompatActivity {
             case R.id.action_create:
                 //Store the Value in the Database
                 startposting();
-                startActivity(new Intent(InputActivity.this, DashboardActivity.class));
+                startActivity(new Intent(InputActivity.this, DayViewActivity.class));
                 return true;
 
             default:
