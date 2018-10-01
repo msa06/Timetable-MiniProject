@@ -1,15 +1,15 @@
 package com.example.msa.timetable.Model;
 
 public class User {
-    String uid;
-    String name;
-    String emailid;
-    Boolean access;
+    private String uid;
+    private String name;
+    private String emailid;
+    private int access;
 
     public User() {
     }
 
-    public User(String uid, String name, String emailid, Boolean access) {
+    public User(String uid, String name, String emailid, int access) {
         this.uid = uid;
         this.name = name;
         this.emailid = emailid;
@@ -30,7 +30,7 @@ public class User {
         return emailid;
     }
 
-    public Boolean getAccess() {
+    public int getAccess() {
         return access;
     }
 }

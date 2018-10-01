@@ -29,6 +29,8 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.Calendar;
 
+import static com.example.msa.timetable.Activities.ChoiceActivity.mUserAccess;
+
 public class DayViewActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -59,7 +61,7 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
         setNavigationDrawer();
         navigationView.getMenu().getItem(0).setCheckable(true);
 
-        if(!ChoiceActivity.mUserAccess){
+        if(mUserAccess!=1){
             invalidateOptionsMenu();
         }
 
@@ -137,7 +139,7 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
         inflater.inflate(R.menu.menu_items, menu);
         MenuItem additem = menu.findItem(R.id.action_add);
 
-        if(ChoiceActivity.mUserAccess){
+        if(mUserAccess==1){
             additem.setVisible(true);
         }
         else {
@@ -185,7 +187,7 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
                 finish();
                 break;
             case R.id.nav_logout:
-                ChoiceActivity.mUserAccess = false;
+                mUserAccess = 0;
                 mAuth.signOut();
                 Toast.makeText(this, "Signing Out!!", Toast.LENGTH_SHORT).show();
                 break;

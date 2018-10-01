@@ -87,7 +87,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         setNavigationDrawer();
         navigationView.getMenu().getItem(0).setCheckable(true);
 
-        if(!mUserAccess){
+        if(mUserAccess!=1){
             invalidateOptionsMenu();
         }
 
@@ -131,7 +131,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         inflater.inflate(R.menu.menu_items, menu);
         MenuItem additem = menu.findItem(R.id.action_add);
 
-        if(mUserAccess){
+        if(mUserAccess==1){
             additem.setVisible(true);
         }
         else {
@@ -179,7 +179,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 finish();
                 break;
             case R.id.nav_logout:
-                mUserAccess=false;
+                mUserAccess=0;
                 mAuth.signOut();
                 Toast.makeText(this, "Signing Out!!", Toast.LENGTH_SHORT).show();
                 break;
@@ -198,7 +198,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         String uid = user.getUid();
         String name = user.getDisplayName();
         String email = user.getEmail();
-        Boolean access = mUserAccess;
+        int access = mUserAccess;
         User userdata = new User(uid,name,email,access);
         mUserDatabaseReference.child(uid).setValue(userdata);
     }
@@ -210,7 +210,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                     if (dataSnapshot.hasChild(mUser.getUid())){
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                             User user = snapshot.getValue(User.class);
-
                             if (user.getAccess() != mUserAccess){
                                 Toast.makeText(DashboardActivity.this, "You Are Not Authorized", Toast.LENGTH_SHORT).show();
                                 mAuth.signOut();
