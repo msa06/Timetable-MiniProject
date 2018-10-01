@@ -155,7 +155,7 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
             case R.id.action_add:
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
-                startActivity(new Intent(DayViewActivity.this,InputActivity.class));
+                startActivity(new Intent(DayViewActivity.this,InputPeriodActivity.class));
                 return true;
 
             default:

@@ -3,7 +3,6 @@ package com.example.msa.timetable.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,18 +17,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.msa.timetable.Model.Period;
+import com.example.msa.timetable.Model.Class;
 import com.example.msa.timetable.Model.User;
 import com.example.msa.timetable.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mikhaellopez.circularimageview.CircularImageView;
+
+import java.util.ArrayList;
 
 import static com.example.msa.timetable.Activities.ChoiceActivity.mUserAccess;
 
@@ -46,6 +46,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private Toolbar mytoolbar;
     private TextView username,useremail;
     private CircularImageView userimage;
+    private ArrayList<Class> classes;
 
     @Override
     protected void onStart() {
@@ -65,6 +66,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mUserDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        //Reference
+        classes = new ArrayList<>();
+        classes.add(new Class());
 
         //User mAuth Listner
         //Auth Listner
@@ -157,7 +162,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             case R.id.action_add:
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
-                Toast.makeText(this, "Add a New Class!1", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(DashboardActivity.this,InputClassActivity.class));
+                finish();
                 return true;
 
             default:
@@ -217,7 +223,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         String name = user.getDisplayName();
         String email = user.getEmail();
         int access = mUserAccess;
-        User userdata = new User(uid,name,email,access);
+        User userdata = new User(uid,name,email,access,classes);
         mUserDatabaseReference.child(uid).setValue(userdata);
     }
     private void attachDatabaseReadListner() {

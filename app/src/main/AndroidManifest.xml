@@ -27,9 +27,11 @@
             android:name=".Activities.AboutActivity"
             android:parentActivityName=".Activities.DashboardActivity" />
         <activity
-            android:name=".Activities.InputActivity"
+            android:name=".Activities.InputPeriodActivity"
             android:parentActivityName=".Activities.DayViewActivity" />
-        <activity android:name=".Activities.DashboardActivity"></activity>
+        <activity android:name=".Activities.DashboardActivity" />
+        <activity android:name=".Activities.InputClassActivity"
+            android:parentActivityName=".Activities.DashboardActivity"></activity>
     </application>
 
 </manifest>

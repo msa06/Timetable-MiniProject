@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class InputActivity extends AppCompatActivity {
+public class InputPeriodActivity extends AppCompatActivity {
     private String dayofweek;
     private String typeofperiod;
     Calendar calendar;
@@ -161,7 +161,7 @@ public class InputActivity extends AppCompatActivity {
         currentHour = calendar.get(Calendar.HOUR_OF_DAY);
         currentMinute = calendar.get(Calendar.MINUTE);
 
-        timePickerDialog = new TimePickerDialog(InputActivity.this, new TimePickerDialog.OnTimeSetListener() {
+        timePickerDialog = new TimePickerDialog(InputPeriodActivity.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
                 if (hourOfDay >= 12) {
@@ -194,7 +194,7 @@ public class InputActivity extends AppCompatActivity {
             case R.id.action_create:
                 //Store the Value in the Database
                 startposting();
-                startActivity(new Intent(InputActivity.this, DayViewActivity.class));
+                startActivity(new Intent(InputPeriodActivity.this, DayViewActivity.class));
                 return true;
 
             default:
@@ -220,7 +220,7 @@ public class InputActivity extends AppCompatActivity {
         newPost.child(key).setValue(period).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(InputActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(InputPeriodActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
             }
         });
 
