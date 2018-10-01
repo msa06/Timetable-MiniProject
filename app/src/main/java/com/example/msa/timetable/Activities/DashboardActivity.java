@@ -1,35 +1,28 @@
 package com.example.msa.timetable.Activities;
 
 import android.content.Intent;
-import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.msa.timetable.R;
-import com.example.msa.timetable.Data.SimpleFragmentPagerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
-import java.util.Calendar;
-
-public class DayViewActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListner;
     private DrawerLayout drawer;
@@ -46,21 +39,22 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
         mAuth.addAuthStateListener(mAuthListner);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_dayview);
+        setContentView(R.layout.activity_dashboard);
+
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
         //User mAuth Listner
+        //Auth Listner
         mAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser()==null){
-                    startActivity(new Intent(DayViewActivity.this,ChoiceActivity.class));
+                    startActivity(new Intent(DashboardActivity.this,ChoiceActivity.class));
                     finish();
                 }
             }
@@ -68,27 +62,16 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
 
         //Adding Toolbar
         mytoolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        mytoolbar.setTitle("Dayview");
+        mytoolbar.setTitle("Dashboard");
         setSupportActionBar(mytoolbar);
-        getSupportActionBar().setElevation(0);
 
         //Setting Navigation Drawer
         setNavigationDrawer();
         navigationView.getMenu().getItem(0).setCheckable(true);
 
-
         if(ChoiceActivity.studentlogin){
             invalidateOptionsMenu();
         }
-        //Auth Listner
-
-
-
-        //Setting Up the ViewPager
-        setViewPager();
-
-
-
 
     }
 
@@ -105,40 +88,11 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
         username = (TextView) header.findViewById(R.id.nav_usernametext);
         useremail = (TextView) header.findViewById(R.id.nav_useremailid);
 
-        Glide.with(DayViewActivity.this)
+        Glide.with(DashboardActivity.this)
                 .load(mUser.getPhotoUrl())
                 .into(userimage);
         username.setText(mUser.getDisplayName());
         useremail.setText(mUser.getEmail());
-    }
-
-    private void setViewPager() {
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-
-        SimpleFragmentPagerAdapter adapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-
-        //To Show the Fragments according to the day of the week
-        Calendar c = Calendar.getInstance();
-        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-
-        if (Calendar.MONDAY == dayOfWeek) {
-            viewPager.setCurrentItem(0, true);
-        } else if (Calendar.TUESDAY == dayOfWeek) {
-            viewPager.setCurrentItem(1, true);
-        } else if (Calendar.WEDNESDAY == dayOfWeek) {
-            viewPager.setCurrentItem(2, true);
-        } else if (Calendar.THURSDAY == dayOfWeek) {
-            viewPager.setCurrentItem(3, true);
-        } else if (Calendar.FRIDAY == dayOfWeek) {
-            viewPager.setCurrentItem(4, true);
-        } else if (Calendar.SATURDAY == dayOfWeek) {
-            viewPager.setCurrentItem(5, true);
-        }
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.slidingtabs);
-        tabLayout.setupWithViewPager(viewPager);
-
     }
 
 
@@ -174,7 +128,7 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
             case R.id.action_add:
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
-                startActivity(new Intent(DayViewActivity.this,InputActivity.class));
+                Toast.makeText(this, "Add a New Class!1", Toast.LENGTH_SHORT).show();
                 return true;
 
             default:
@@ -189,11 +143,11 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_dashboard:
-                startActivity(new Intent(DayViewActivity.this,DashboardActivity.class));
-                finish();
+
                 break;
             case R.id.nav_dayview:
-
+                startActivity(new Intent(DashboardActivity.this,DayViewActivity.class));
+                finish();
                 break;
             case R.id.nav_weekview:
                 Toast.makeText(this, "Week View", Toast.LENGTH_SHORT).show();
@@ -202,7 +156,7 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
                 Toast.makeText(this, "Settings!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_about:
-                startActivity(new Intent(DayViewActivity.this,AboutActivity.class));
+                startActivity(new Intent(DashboardActivity.this,AboutActivity.class));
                 finish();
                 break;
             case R.id.nav_logout:
@@ -216,4 +170,9 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
         return true;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(mAuthListner);
+    }
 }

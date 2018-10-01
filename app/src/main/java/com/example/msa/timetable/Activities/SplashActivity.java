@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 mAuth.addAuthStateListener(mAuthListner);
                 if(mAuth.getCurrentUser()!=null){
-                    startActivity(new Intent(SplashActivity.this, DayViewActivity.class));
+                    startActivity(new Intent(SplashActivity.this, DashboardActivity.class));
                     finish();
                 }
                 else{
