@@ -37,7 +37,7 @@ public class ChoiceActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 2;
     LinearLayout studentcard,teachercard;
-    public static int mUserAccess=0;
+    public static int mUserAccess;
     private ValueEventListener mValueEventListner;
 
     @Override
@@ -51,16 +51,16 @@ public class ChoiceActivity extends AppCompatActivity {
         studentcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUserAccess=-1;
                 signin();
+                mUserAccess=-1;
             }
         });
 
         teachercard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUserAccess=1;
                 signin();
+                mUserAccess=1;
             }
         });
 

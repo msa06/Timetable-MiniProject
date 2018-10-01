@@ -74,6 +74,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 if (firebaseAuth.getCurrentUser()==null){
                     startActivity(new Intent(DashboardActivity.this,ChoiceActivity.class));
                     finish();
+                    Toast.makeText(DashboardActivity.this, "User Not Present", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(DashboardActivity.this, "User Present", Toast.LENGTH_SHORT).show();
+                    setAccessCode();
                 }
             }
         };
@@ -90,6 +95,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if(mUserAccess!=1){
             invalidateOptionsMenu();
         }
+
+    }
+
+    private void setAccessCode() {
 
     }
 
@@ -194,6 +203,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         mAuth.removeAuthStateListener(mAuthListner);
         detachedDatabaseReadListner();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAuth.removeAuthStateListener(mAuthListner);
+        detachedDatabaseReadListner();
+    }
+
     private void saveUserData(FirebaseUser user) {
         String uid = user.getUid();
         String name = user.getDisplayName();
@@ -210,10 +227,20 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                     if (dataSnapshot.hasChild(mUser.getUid())){
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                             User user = snapshot.getValue(User.class);
-                            if (user.getAccess() != mUserAccess){
-                                Toast.makeText(DashboardActivity.this, "You Are Not Authorized", Toast.LENGTH_SHORT).show();
-                                mAuth.signOut();
+                            if (user.getUid().equals(mUser.getUid())){
+                                Toast.makeText(DashboardActivity.this, "Welcome User : "+ user.getName() + " " + user.getAccess() + " "+ mUserAccess, Toast.LENGTH_SHORT).show();
+                                if (user.getAccess() != mUserAccess){
+                                    Toast.makeText(DashboardActivity.this, "You Are Not Authorized" + user.getName() + mUserAccess, Toast.LENGTH_SHORT).show();
+                                    mAuth.signOut();
+                                }
+                                else{
+                                    Toast.makeText(DashboardActivity.this, "Why are you here?", Toast.LENGTH_SHORT).show();
+                                }
                             }
+                            else{
+                                Toast.makeText(DashboardActivity.this, "You Shouldnt be here:" + user.getName() + " " + user.getAccess() + " " + mUser.getDisplayName() , Toast.LENGTH_SHORT).show();
+                            }
+
                         }
                     }
                     else{
