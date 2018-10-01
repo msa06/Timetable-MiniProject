@@ -48,4 +48,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListner);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.addAuthStateListener(mAuthListner);
+    }
 }

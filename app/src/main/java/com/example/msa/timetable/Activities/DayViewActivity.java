@@ -31,41 +31,24 @@ import java.util.Calendar;
 
 public class DayViewActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListner;
+    private FirebaseUser mUser;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
     private Toolbar mytoolbar;
-    private FirebaseUser mUser;
     private TextView username,useremail;
     private CircularImageView userimage;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListner);
-    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_dayview);
+        //Firebase Reference
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-
-        //User mAuth Listner
-        mAuthListner = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser()==null){
-                    startActivity(new Intent(DayViewActivity.this,ChoiceActivity.class));
-                    finish();
-                }
-            }
-        };
-
         //Adding Toolbar
         mytoolbar = (Toolbar) findViewById(R.id.my_toolbar);
         mytoolbar.setTitle("Dayview");
@@ -76,13 +59,9 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
         setNavigationDrawer();
         navigationView.getMenu().getItem(0).setCheckable(true);
 
-
-        if(ChoiceActivity.studentlogin){
+        if(!ChoiceActivity.mUserAccess){
             invalidateOptionsMenu();
         }
-        //Auth Listner
-
-
 
         //Setting Up the ViewPager
         setViewPager();
@@ -141,7 +120,6 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
 
     }
 
-
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)){
@@ -158,11 +136,12 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_items, menu);
         MenuItem additem = menu.findItem(R.id.action_add);
-        if(ChoiceActivity.studentlogin){
-            additem.setVisible(false);
-        }
-        if(ChoiceActivity.teacherlogin){
+
+        if(ChoiceActivity.mUserAccess){
             additem.setVisible(true);
+        }
+        else {
+            additem.setVisible(false);
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -206,8 +185,7 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
                 finish();
                 break;
             case R.id.nav_logout:
-                ChoiceActivity.teacherlogin=false;
-                ChoiceActivity.studentlogin=false;
+                ChoiceActivity.mUserAccess = false;
                 mAuth.signOut();
                 Toast.makeText(this, "Signing Out!!", Toast.LENGTH_SHORT).show();
                 break;

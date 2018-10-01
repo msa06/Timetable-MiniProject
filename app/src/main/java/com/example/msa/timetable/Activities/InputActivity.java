@@ -185,11 +185,6 @@ public class InputActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_create, menu);
-        MenuItem additem = menu.findItem(R.id.action_create);
-        if (ChoiceActivity.studentlogin) {
-            additem.setVisible(false);
-        }
-
         return super.onCreateOptionsMenu(menu);
     }
 
