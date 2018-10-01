@@ -8,7 +8,7 @@ public class Class {
     private ArrayList<String> teachers;
     private ArrayList<String> theorysubjects;
     private ArrayList<String> practicalSubjects;
-    private ArrayList<String> timetable;
+
     public Class() {
     }
 

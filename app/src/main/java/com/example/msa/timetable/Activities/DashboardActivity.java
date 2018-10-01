@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,13 +42,17 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private FirebaseAuth.AuthStateListener mAuthListner;
     private ValueEventListener mValueEventListner;
     private DatabaseReference mUserDatabaseReference;
+    private DatabaseReference mClassDatabaseReference;
+
+
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
     private Toolbar mytoolbar;
     private TextView username,useremail;
     private CircularImageView userimage;
-    private ArrayList<String> classes;
+    public static ArrayList<String> classes = new ArrayList<>();
+    private ListView classlist;
 
     @Override
     protected void onStart() {
@@ -60,6 +66,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_dashboard);
+        classlist = (ListView) findViewById(R.id.classlist);
 
         //Firebase Reference
 
@@ -67,8 +74,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         mUser = mAuth.getCurrentUser();
         mUserDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        //Reference
-        classes = new ArrayList<String>();
+
 
         //User mAuth Listner
         //Auth Listner
@@ -83,7 +89,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 }
                 else {
                     Toast.makeText(DashboardActivity.this, "User Present", Toast.LENGTH_SHORT).show();
-                    setAccessCode();
+
                 }
             }
         };
@@ -101,11 +107,18 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             invalidateOptionsMenu();
         }
 
+        //Setting Class List
+        setClassList();
+
     }
 
-    private void setAccessCode() {
-
+    private void setClassList() {
+        if (classes!=null) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, classes);
+            classlist.setAdapter(adapter);
+        }
     }
+
 
     private void setNavigationDrawer() {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -235,6 +248,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                             User user = snapshot.getValue(User.class);
                             if (user.getUid().equals(mUser.getUid())){
+                                classes = user.getClasses();
                                 Toast.makeText(DashboardActivity.this, "Welcome User : "+ user.getName() + " " + user.getAccess() + " "+ mUserAccess, Toast.LENGTH_SHORT).show();
                                 if (user.getAccess() != mUserAccess){
                                     Toast.makeText(DashboardActivity.this, "You Are Not Authorized" + user.getName() + mUserAccess, Toast.LENGTH_SHORT).show();
