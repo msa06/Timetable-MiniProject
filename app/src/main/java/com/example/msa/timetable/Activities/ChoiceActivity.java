@@ -99,6 +99,7 @@ public class ChoiceActivity extends AppCompatActivity {
                             Log.d("TAG", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             startActivity(new Intent(ChoiceActivity.this,DashboardActivity.class));
+                            finish();
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
