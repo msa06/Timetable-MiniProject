@@ -31,18 +31,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import static com.example.msa.timetable.Activities.ChoiceActivity.mUserAccess;
+
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     //Firebase Defineed variable
     private FirebaseUser mUser;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListner;
-    private DatabaseReference mUserDatabaseReference;
     private ValueEventListener mValueEventListner;
+    private DatabaseReference mUserDatabaseReference;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
     private Toolbar mytoolbar;
-
     private TextView username,useremail;
     private CircularImageView userimage;
 
@@ -86,7 +87,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         setNavigationDrawer();
         navigationView.getMenu().getItem(0).setCheckable(true);
 
-        if(!ChoiceActivity.mUserAccess){
+        if(!mUserAccess){
             invalidateOptionsMenu();
         }
 
@@ -130,7 +131,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         inflater.inflate(R.menu.menu_items, menu);
         MenuItem additem = menu.findItem(R.id.action_add);
 
-        if(ChoiceActivity.mUserAccess){
+        if(mUserAccess){
             additem.setVisible(true);
         }
         else {
@@ -178,7 +179,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 finish();
                 break;
             case R.id.nav_logout:
-                ChoiceActivity.mUserAccess=false;
+                mUserAccess=false;
                 mAuth.signOut();
                 Toast.makeText(this, "Signing Out!!", Toast.LENGTH_SHORT).show();
                 break;
@@ -193,36 +194,39 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         mAuth.removeAuthStateListener(mAuthListner);
         detachedDatabaseReadListner();
     }
+    private void saveUserData(FirebaseUser user) {
+        String uid = user.getUid();
+        String name = user.getDisplayName();
+        String email = user.getEmail();
+        Boolean access = mUserAccess;
+        User userdata = new User(uid,name,email,access);
+        mUserDatabaseReference.child(uid).setValue(userdata);
+    }
     private void attachDatabaseReadListner() {
         if (mValueEventListner == null){
-           mValueEventListner = new ValueEventListener() {
-               @Override
-               public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                   if (!dataSnapshot.exists()){
-                       //Creating a New User
-                       String uid = mUser.getUid();
-                       String name = mUser.getDisplayName();
-                       String email = mUser.getEmail();
-                       Boolean access = ChoiceActivity.mUserAccess;
-                       User user = new User(uid,name,email,access);
-                       mUserDatabaseReference.child(uid).setValue(user);
-                   }
-                   else{
-                       for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                             User user = postSnapshot.getValue(User.class);
-                             if (user.getAccess() != ChoiceActivity.mUserAccess ){
-                                 Toast.makeText(DashboardActivity.this, "This Id is Associated as Teacher Please Choose Teacher Login", Toast.LENGTH_LONG).show();
-                                 mAuth.signOut();
-                             }
-                       }
-                   }
-               }
+            mValueEventListner = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild(mUser.getUid())){
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            User user = snapshot.getValue(User.class);
 
-               @Override
-               public void onCancelled(@NonNull DatabaseError databaseError) {
+                            if (user.getAccess() != mUserAccess){
+                                Toast.makeText(DashboardActivity.this, "You Are Not Authorized", Toast.LENGTH_SHORT).show();
+                                mAuth.signOut();
+                            }
+                        }
+                    }
+                    else{
+                        saveUserData(mUser);
+                    }
+                }
 
-               }
-           };
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            };
             mUserDatabaseReference.addValueEventListener(mValueEventListner);
         }
     }
@@ -233,6 +237,5 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }
 
     }
-
 
 }

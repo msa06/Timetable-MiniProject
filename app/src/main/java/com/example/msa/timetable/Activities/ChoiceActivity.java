@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.msa.timetable.Model.Period;
+import com.example.msa.timetable.Model.User;
 import com.example.msa.timetable.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -22,13 +24,21 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ChoiceActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    private DatabaseReference mUserdatabase;
     private GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 2;
     LinearLayout studentcard,teachercard;
     public static boolean mUserAccess;
+    private ValueEventListener mValueEventListner;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -37,7 +47,7 @@ public class ChoiceActivity extends AppCompatActivity {
         studentcard = (LinearLayout) findViewById(R.id.student_card);
         teachercard = (LinearLayout) findViewById(R.id.teacher_card);
         mAuth = FirebaseAuth.getInstance();
-
+        mUserdatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         studentcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +107,7 @@ public class ChoiceActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            mUser = mAuth.getCurrentUser();
                             startActivity(new Intent(ChoiceActivity.this,DashboardActivity.class));
                             finish();
                             //updateUI(user);
@@ -112,4 +122,7 @@ public class ChoiceActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
+
 }

@@ -14,7 +14,9 @@ public class User {
         this.name = name;
         this.emailid = emailid;
         this.access = access;
+
     }
+
 
     public String getUid() {
         return uid;
