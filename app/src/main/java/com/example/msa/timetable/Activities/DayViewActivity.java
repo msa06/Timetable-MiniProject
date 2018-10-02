@@ -37,7 +37,6 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.Calendar;
 
-import static com.example.msa.timetable.Activities.ChoiceActivity.mUserAccess;
 
 public class DayViewActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth mAuth;
@@ -83,16 +82,10 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
         mAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                getAccessCode();
                 if (firebaseAuth.getCurrentUser()==null){
-                    Toast.makeText(DayViewActivity.this, "User Not Present", Toast.LENGTH_SHORT).show();
-                    getAccessCode();
                     startActivity(new Intent(DayViewActivity.this,ChoiceActivity.class));
                     finish();
-
-                }
-                else {
-                    Toast.makeText(DayViewActivity.this, "User Present", Toast.LENGTH_SHORT).show();
-                    getAccessCode();
                 }
             }
         };
@@ -107,7 +100,7 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
         setNavigationDrawer();
         navigationView.getMenu().getItem(0).setCheckable(true);
 
-        if(mUserAccess!=1){
+        if(accesscode!=1){
             invalidateOptionsMenu();
         }
 
@@ -121,7 +114,6 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
 
     private void getAccessCode() {
         accesscode = mUserAccessShared.getInt("AccessCode",1);
-        Toast.makeText(this, ""+ accesscode, Toast.LENGTH_SHORT).show();
     }
 
     private void setNavigationDrawer() {
@@ -190,7 +182,7 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
         inflater.inflate(R.menu.menu_items, menu);
         MenuItem additem = menu.findItem(R.id.action_add);
 
-        if(mUserAccess==1){
+        if(accesscode==1){
             additem.setVisible(true);
         }
         else {
@@ -232,9 +224,7 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
             case R.id.nav_logout:
                 final SharedPreferences.Editor editor = mUserAccessShared.edit();
                 editor.remove("AccessCode");
-                Toast.makeText(this, "" + accesscode, Toast.LENGTH_SHORT).show();
                 mAuth.signOut();
-                Toast.makeText(this, "Signing Out!!", Toast.LENGTH_SHORT).show();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -259,7 +249,7 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
         String uid = user.getUid();
         String name = user.getDisplayName();
         String email = user.getEmail();
-        int access = mUserAccess;
+        int access = accesscode;
         User userdata = new User(uid,name,email,access);
         mUserDatabaseReference.child(uid).setValue(userdata);
     }
@@ -272,19 +262,12 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                             User user = snapshot.getValue(User.class);
                             if (user.getUid().equals(mUser.getUid())){
-                                Toast.makeText(DayViewActivity.this, "Welcome User : "+ user.getName() + " " + user.getAccess() + " "+ accesscode, Toast.LENGTH_SHORT).show();
                                 if (user.getAccess() != accesscode){
-                                    Toast.makeText(DayViewActivity.this, "You Are Not Authorized" + user.getName() + mUserAccess, Toast.LENGTH_SHORT).show();
                                     mAuth.signOut();
-                                }
-                                else{
-                                    Toast.makeText(DayViewActivity.this, "Why are you here?", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(DayViewActivity.this, "You Are Not Authorized!!" , Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(DayViewActivity.this, "Use a Different Login" , Toast.LENGTH_SHORT).show();
                                 }
                             }
-                            else{
-                                Toast.makeText(DayViewActivity.this, "You Shouldnt be here:" + user.getName() + " " + user.getAccess() + " " + mUser.getDisplayName() , Toast.LENGTH_SHORT).show();
-                            }
-
                         }
                     }
                     else{
