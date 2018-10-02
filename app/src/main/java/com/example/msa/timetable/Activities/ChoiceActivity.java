@@ -121,7 +121,7 @@ public class ChoiceActivity extends AppCompatActivity {
                             Log.d("TAG", "signInWithCredential:success");
                             mUser = mAuth.getCurrentUser();
 
-                            startActivity(new Intent(ChoiceActivity.this,DashboardActivity.class));
+                            startActivity(new Intent(ChoiceActivity.this,DayViewActivity.class));
                             finish();
                             //updateUI(user);
                         } else {

@@ -6,14 +6,9 @@
     <group
         android:id="@+id/nav_group1"
         android:checkableBehavior="single">
-        <item android:id="@+id/nav_dashboard"
-            android:title="Dashboard"/>
         <item
             android:id="@+id/nav_dayview"
             android:title="Dayview" />
-        <item
-            android:id="@+id/nav_weekview"
-            android:title="Weekview" />
 
     </group>
     <group android:id="@+id/nav_group2"
