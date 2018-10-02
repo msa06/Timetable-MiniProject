@@ -11,7 +11,7 @@ import com.example.msa.timetable.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity {
-    private static int SPLASH_TIME_OUT=3000;
+    private static int SPLASH_TIME_OUT=2000;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListner;
     @Override
