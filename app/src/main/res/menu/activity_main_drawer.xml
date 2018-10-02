@@ -8,17 +8,21 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_dayview"
+            android:icon="@drawable/round_view_array_black_24"
             android:title="Dayview" />
 
     </group>
     <group android:id="@+id/nav_group2"
         android:checkableBehavior="single">
         <item android:id="@+id/nav_settings"
+            android:icon="@drawable/round_settings_black_24"
             android:title="Settings"
             />
         <item android:id="@+id/nav_about"
+            android:icon="@drawable/round_supervised_user_circle_black_24"
             android:title="About"/>
         <item android:id="@+id/nav_logout"
+            android:icon="@drawable/round_exit_to_app_black_24"
             android:title="Log Out"/>
 
 

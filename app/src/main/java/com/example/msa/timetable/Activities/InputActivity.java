@@ -31,7 +31,6 @@ import java.util.List;
 
 public class InputActivity extends AppCompatActivity {
     private String dayofweek;
-    private String typeofperiod;
     Calendar calendar;
     TimePickerDialog timePickerDialog;
     int currentHour;
@@ -67,9 +66,6 @@ public class InputActivity extends AppCompatActivity {
         periodname = (EditText) findViewById(R.id.periodname);
         teachername = (EditText) findViewById(R.id.teachertextinput);
         placetext = (EditText) findViewById(R.id.placetextinput);
-        theorylayout = (LinearLayout) findViewById(R.id.theoryperiod);
-        practicallayout = (ScrollView) findViewById(R.id.practicalperiod);
-        practicallayout.setVisibility(View.GONE);
 
         //onClickListener
         starttimetext.setOnClickListener(new View.OnClickListener() {
@@ -127,35 +123,6 @@ public class InputActivity extends AppCompatActivity {
             }
         });
 
-
-        //Period Type Horizontal Picker
-        final HorizontalPicker periodtype = (HorizontalPicker) findViewById(R.id.typepicker);
-        final List<HorizontalPicker.PickerItem> typetextItems = new ArrayList<>();
-        final String ptype[] = getResources().getStringArray(R.array.period_type);
-        for (int i = 0; i <= 1; i++) {
-            typetextItems.add(new HorizontalPicker.TextItem(ptype[i]));
-        }
-        periodtype.setItems(typetextItems); //3 here signifies the default selected item. Use : daypicker.setItems(daytextItems) if none of the items are selected by default.
-
-        periodtype.setChangeListener(new HorizontalPicker.OnSelectionChangeListener() {
-            @Override
-            public void onItemSelect(HorizontalPicker horizontalPicker, int i) {
-                HorizontalPicker.PickerItem selected = horizontalPicker.getSelectedItem();
-                switch (selected.getText().toString()) {
-                    case "Theory":
-                        typeofperiod = "Theory";
-                        theorylayout.setVisibility(View.VISIBLE);
-                        practicallayout.setVisibility(View.GONE);
-
-                        break;
-                    case "Practical":
-                        typeofperiod = "Practical";
-                        theorylayout.setVisibility(View.GONE);
-                        practicallayout.setVisibility(View.VISIBLE);
-                        break;
-                }
-            }
-        });
 
 
     }
@@ -228,10 +195,6 @@ public class InputActivity extends AppCompatActivity {
             placetext.setError("Can't be Null");
             return false;
         }
-        else if (typeofperiod==null){
-            Toast.makeText(this, "Please Select the Type of Period", Toast.LENGTH_SHORT).show();
-            return false;
-        }
         else if (dayofweek==null){
             Toast.makeText(this, "Please Select the Day of Week", Toast.LENGTH_SHORT).show();
             return false;
@@ -249,7 +212,7 @@ public class InputActivity extends AppCompatActivity {
 
         DatabaseReference newPost = mpostDatabase.child(dayofweek);
         String key = newPost.push().getKey();
-        Period period = new Period(pnamevalue, starttimevalue, endtimevalue, tnamevalue, placevalue, typeofperiod, key);
+        Period period = new Period(pnamevalue, starttimevalue, endtimevalue, tnamevalue, placevalue, key);
 
         newPost.child(key).setValue(period).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

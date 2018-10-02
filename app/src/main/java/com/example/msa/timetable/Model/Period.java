@@ -8,19 +8,17 @@ public class Period {
     String et;
     String tn;
     String pl;
-    String pt;
     String id;
 
     public Period() {
     }
 
-    public Period(String pn, String st, String et, String tn, String pl, String pt, String id) {
+    public Period(String pn, String st, String et, String tn, String pl, String id) {
         this.pn = pn;
         this.st = st;
         this.et = et;
         this.tn = tn;
         this.pl = pl;
-        this.pt = pt;
         this.id = id;
     }
 
@@ -44,10 +42,6 @@ public class Period {
         return pl;
     }
 
-    public String getPt() {
-        return pt;
-    }
-
     public String getId() {
         return id;
     }
@@ -59,7 +53,6 @@ public class Period {
         this.et = period.getEt();
         this.tn = period.getTn();
         this.pl = period.getPl();
-        this.pt = period.getPt();
         this.id = period.getId();
     }
 }
