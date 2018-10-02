@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -109,16 +110,8 @@ public class ThursdayFragment extends Fragment {
         final TextView endtimetext = (TextView) dialogview.findViewById(R.id.endtimestart);
         final Button updatebtn = (Button) dialogview.findViewById(R.id.updatebtn);
         final Button deletebtn  = (Button) dialogview.findViewById(R.id.deletebtn);
+        final ImageView cancelbtn = (ImageView) dialogview.findViewById(R.id.canceldialog);
 
-
-        //Horizontal Picker For TypeofPeriod
-        final HorizontalPicker periodtype = (HorizontalPicker) dialogview.findViewById(R.id.typepicker);
-        final List<HorizontalPicker.PickerItem> typetextItems = new ArrayList<>();
-        final String ptype[] = getResources().getStringArray(R.array.period_type);
-        for(int i=0;i<=1;i++){
-            typetextItems.add(new HorizontalPicker.TextItem(ptype[i]));
-        }
-        periodtype.setItems(typetextItems,0); //3 here signifies the default selected item. Use : daypicker.setItems(daytextItems) if none of the items are selected by default.
 
         //Repopulate the Period Value
         periodnametext.setText(period.getPn());
@@ -129,7 +122,6 @@ public class ThursdayFragment extends Fragment {
 
 
         //Dialogue Builder
-        dialogbuilder.setTitle("Edit Period");
         final AlertDialog alertDialog = dialogbuilder.create();
         alertDialog.show();
 
@@ -149,22 +141,7 @@ public class ThursdayFragment extends Fragment {
                 settime(endtimetext);
             }
         });
-        //Picker Dialog
-        periodtype.setChangeListener(new HorizontalPicker.OnSelectionChangeListener() {
-            @Override
-            public void onItemSelect(HorizontalPicker horizontalPicker, int i) {
-                HorizontalPicker.PickerItem selected = horizontalPicker.getSelectedItem();
-                switch (selected.getText().toString()){
-                    case "Theory":
-                        typeofperiod = "Theory";
-
-                        break;
-                    case "Practical":
-                        typeofperiod = "Practical";
-                        break;
-                }
-            }
-        });
+//
         //Update the Entries
         updatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,7 +154,7 @@ public class ThursdayFragment extends Fragment {
                 String endtime = endtimetext.getText().toString().trim();
                 String id = period.getId();
 
-                Period newperiod = new Period(periodname,startime,endtime,teachername,place,typeofperiod,id);
+                Period newperiod = new Period(periodname,startime,endtime,teachername,place,id);
                 updatePeriod(newperiod);
 
                 alertDialog.dismiss();
@@ -191,10 +168,15 @@ public class ThursdayFragment extends Fragment {
                 alertDialog.dismiss();
             }
         });
+        cancelbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
 
 
     }
-
     private void updatePeriod(Period period) {
         DatabaseReference updateReference = weekdayReference.child(period.getId());
         updateReference.setValue(period);

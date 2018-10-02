@@ -4,117 +4,140 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <com.goodiebag.horizontalpicker.HorizontalPicker
-        android:id="@+id/typepicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:backgroundSelector="@drawable/hpicker_background"
-        app:itemWidth="100dp"
-        app:textColorSelector="@color/white"
-        app:textSize="18sp" />
-
-    <EditText
-        android:id="@+id/pnameEdittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Period Name"
-       />
-
-    <EditText
-        android:id="@+id/teacherEdittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Teacher Name"
-         />
-    <EditText
-        android:id="@+id/placeEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Place"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="@string/starttime"
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/starttimetext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="00:00 AM"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/endtime"
-                android:textColor="@color/textColor"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/endtimestart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="00:00 AM"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp" />
-
-        </LinearLayout>
-    </LinearLayout>
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/gradient_theme"
         android:orientation="horizontal">
-        <Button
-            android:id="@+id/updatebtn"
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="wrap_content"
+            android:text="Edit Details"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:padding="16dp"/>
+        <ImageView
+            android:id="@+id/canceldialog"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Update"
+            android:layout_gravity="center"
+            android:src="@drawable/outline_cancel_white_36"
             />
 
-        <Button
-            android:id="@+id/deletebtn"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Delete"
-            />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
+
+        <EditText
+            android:id="@+id/pnameEdittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Period Name" />
+
+        <EditText
+            android:id="@+id/teacherEdittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Teacher Name" />
+
+        <EditText
+            android:id="@+id/placeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Place" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/starttime"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/starttimetext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="00:00 AM"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/endtime"
+                    android:textColor="@color/textColor"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/endtimestart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="00:00 AM"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/deletebtn"
+                android:layout_width="0dp"
+                android:background="#EF5350"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Delete" />
+            <Button
+                android:id="@+id/updatebtn"
+                android:layout_width="0dp"
+                android:background="#4CAF50"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Update" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
