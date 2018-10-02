@@ -3,6 +3,8 @@ package com.example.msa.timetable.Fragments;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -124,7 +126,7 @@ public class ThursdayFragment extends Fragment {
         //Dialogue Builder
         final AlertDialog alertDialog = dialogbuilder.create();
         alertDialog.show();
-
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         //onClickListener
         //Starttime Dialog
