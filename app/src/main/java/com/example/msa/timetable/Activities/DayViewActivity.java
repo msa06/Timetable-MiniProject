@@ -145,7 +145,6 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
         //To Show the Fragments according to the day of the week
         Calendar c = Calendar.getInstance();
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-
         if (Calendar.MONDAY == dayOfWeek) {
             viewPager.setCurrentItem(0, true);
         } else if (Calendar.TUESDAY == dayOfWeek) {

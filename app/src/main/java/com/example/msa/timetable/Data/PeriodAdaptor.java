@@ -45,4 +45,6 @@ public class PeriodAdaptor extends ArrayAdapter<Period> {
 
         return itemviewlist;
     }
+
+
 }

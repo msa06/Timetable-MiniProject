@@ -228,6 +228,7 @@ public class TuesdayFragment extends Fragment {
                     amPm = "AM";
                 }
                 starttimetext.setText(String.format("%02d:%02d", hourOfDay, minutes) + " " + amPm);
+
             }
         }, currentHour, currentMinute, false);
 
@@ -294,7 +295,7 @@ public class TuesdayFragment extends Fragment {
 
                 }
             };
-            weekdayReference.addChildEventListener(mChildEventListner);
+            weekdayReference.orderByChild("st").addChildEventListener(mChildEventListner);
         }
     }
     private void detachedDatabaseReadListner() {

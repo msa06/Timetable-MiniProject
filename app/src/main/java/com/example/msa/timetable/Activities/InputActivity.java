@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -37,9 +39,9 @@ public class InputActivity extends AppCompatActivity {
     String amPm;
     private TextView starttimetext;
     private TextView endtimetext;
-    private TextView periodname;
-    private TextView teachername;
-    private TextView placetext;
+    private EditText periodname;
+    private EditText teachername;
+    private EditText placetext;
     private DatabaseReference mpostDatabase;
     private FirebaseDatabase mdatabase;
     private LinearLayout theorylayout;
@@ -62,9 +64,9 @@ public class InputActivity extends AppCompatActivity {
         //Getting the reference
         starttimetext = (TextView) findViewById(R.id.starttimetext);
         endtimetext = (TextView) findViewById(R.id.endtimestart);
-        periodname = (TextView) findViewById(R.id.periodname);
-        teachername = (TextView) findViewById(R.id.teachertextinput);
-        placetext = (TextView) findViewById(R.id.placetextinput);
+        periodname = (EditText) findViewById(R.id.periodname);
+        teachername = (EditText) findViewById(R.id.teachertextinput);
+        placetext = (EditText) findViewById(R.id.placetextinput);
         theorylayout = (LinearLayout) findViewById(R.id.theoryperiod);
         practicallayout = (ScrollView) findViewById(R.id.practicalperiod);
         practicallayout.setVisibility(View.GONE);
@@ -93,10 +95,12 @@ public class InputActivity extends AppCompatActivity {
         for (int i = 0; i <= 5; i++) {
             daytextItems.add(new HorizontalPicker.TextItem(weekday[i]));
         }
-        daypicker.setItems(daytextItems); //3 here signifies the default selected item. Use : daypicker.setItems(daytextItems) if none of the items are selected by default.
+        daypicker.setItems(daytextItems);
+
+         //3 here signifies the default selected item. Use : daypicker.setItems(daytextItems) if none of the items are selected by default.
 
         //Horizontal Selector Listner
-        HorizontalPicker.OnSelectionChangeListener dayhlistener = new HorizontalPicker.OnSelectionChangeListener() {
+        daypicker.setChangeListener(new HorizontalPicker.OnSelectionChangeListener() {
             @Override
             public void onItemSelect(HorizontalPicker horizontalPicker, int i) {
                 HorizontalPicker.PickerItem selected = horizontalPicker.getSelectedItem();
@@ -121,8 +125,8 @@ public class InputActivity extends AppCompatActivity {
                         break;
                 }
             }
-        };
-        daypicker.setChangeListener(dayhlistener);
+        });
+
 
         //Period Type Horizontal Picker
         final HorizontalPicker periodtype = (HorizontalPicker) findViewById(R.id.typepicker);
@@ -131,7 +135,7 @@ public class InputActivity extends AppCompatActivity {
         for (int i = 0; i <= 1; i++) {
             typetextItems.add(new HorizontalPicker.TextItem(ptype[i]));
         }
-        periodtype.setItems(typetextItems, 0); //3 here signifies the default selected item. Use : daypicker.setItems(daytextItems) if none of the items are selected by default.
+        periodtype.setItems(typetextItems); //3 here signifies the default selected item. Use : daypicker.setItems(daytextItems) if none of the items are selected by default.
 
         periodtype.setChangeListener(new HorizontalPicker.OnSelectionChangeListener() {
             @Override
@@ -166,14 +170,15 @@ public class InputActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
                 if (hourOfDay >= 12) {
                     amPm = "PM";
-                    if (hourOfDay != 12) {
-                        hourOfDay = hourOfDay - 12;
+                    if(hourOfDay!=12){
+                        hourOfDay=hourOfDay-12;
                     }
 
                 } else {
                     amPm = "AM";
                 }
                 starttimetext.setText(String.format("%02d:%02d", hourOfDay, minutes) + " " + amPm);
+
             }
         }, currentHour, currentMinute, false);
 
@@ -193,22 +198,51 @@ public class InputActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_create:
                 //Store the Value in the Database
-                startposting();
-                startActivity(new Intent(InputActivity.this, DayViewActivity.class));
+                if (checkinput()){
+                    startposting();
+                    startActivity(new Intent(InputActivity.this, DayViewActivity.class));
+                }
                 return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
         }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private boolean checkinput() {
+        if (periodname.getText().toString().isEmpty()){
+            periodname.setError("Can't be Null");
+            return false;
+        }
+        else if (starttimetext.getText().toString().isEmpty()){
+            starttimetext.setError("Can't be Null");
+            return false;
+        }
+        else if (endtimetext.getText().toString().isEmpty()){
+            endtimetext.setError("Can't be Null");
+            return false;
+        }
+        else if (teachername.getText().toString().isEmpty()){
+            teachername.setError("Can't be Null");
+            return false;
+        }
+        else if (placetext.getText().toString().isEmpty()){
+            placetext.setError("Can't be Null");
+            return false;
+        }
+        else if (typeofperiod==null){
+            Toast.makeText(this, "Please Select the Type of Period", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (dayofweek==null){
+            Toast.makeText(this, "Please Select the Day of Week", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+
     }
 
     private void startposting() {
         String pnamevalue = periodname.getText().toString().trim();
         String starttimevalue = starttimetext.getText().toString().trim();
-        ;
         String endtimevalue = endtimetext.getText().toString().trim();
         String tnamevalue = teachername.getText().toString().trim();
         String placevalue = placetext.getText().toString().trim();
