@@ -14,17 +14,13 @@
         android:contentDescription="@string/app_name"
         android:padding="16dp"
         android:layout_marginTop="50dp"/>
-    <TextView
+    <ImageView
         android:id="@+id/welcome_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_margin="20dp"
-        android:text="@string/welcome_text"
-        android:textColor="@color/colorPrimaryDark"
-        android:textAllCaps="true"
-        android:textSize="36sp"
-        android:textStyle="bold"
+        android:src="@drawable/icontext"
         />
 
     <!--<Button-->
