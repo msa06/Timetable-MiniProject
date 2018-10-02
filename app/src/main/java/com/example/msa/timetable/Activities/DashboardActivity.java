@@ -1,6 +1,8 @@
 package com.example.msa.timetable.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -46,7 +48,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private Toolbar mytoolbar;
     private TextView username,useremail;
     private CircularImageView userimage;
-
+    private SharedPreferences mUserAccessShared;
+    private int accesscode;
     @Override
     protected void onStart() {
         super.onStart();
@@ -73,13 +76,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser()==null){
                     Toast.makeText(DashboardActivity.this, "User Not Present", Toast.LENGTH_SHORT).show();
+                    getAccessCode();
                     startActivity(new Intent(DashboardActivity.this,ChoiceActivity.class));
                     finish();
 
                 }
                 else {
                     Toast.makeText(DashboardActivity.this, "User Present", Toast.LENGTH_SHORT).show();
-                    setAccessCode();
+                    getAccessCode();
                 }
             }
         };
@@ -97,10 +101,17 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             invalidateOptionsMenu();
         }
 
+        //setSharedPreference
+        mUserAccessShared = getSharedPreferences("userAccessCode", Context.MODE_PRIVATE);
+
+
+
+
     }
 
-    private void setAccessCode() {
-
+    private void getAccessCode() {
+        accesscode = mUserAccessShared.getInt("AccessCode",1);
+        Toast.makeText(this, ""+ accesscode, Toast.LENGTH_SHORT).show();
     }
 
     private void setNavigationDrawer() {
@@ -189,7 +200,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 finish();
                 break;
             case R.id.nav_logout:
-                mUserAccess=0;
+                final SharedPreferences.Editor editor = mUserAccessShared.edit();
+                editor.remove("AccessCode");
+                Toast.makeText(this, "" + accesscode, Toast.LENGTH_SHORT).show();
                 mAuth.signOut();
                 Toast.makeText(this, "Signing Out!!", Toast.LENGTH_SHORT).show();
                 break;
@@ -229,8 +242,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                             User user = snapshot.getValue(User.class);
                             if (user.getUid().equals(mUser.getUid())){
-                                Toast.makeText(DashboardActivity.this, "Welcome User : "+ user.getName() + " " + user.getAccess() + " "+ mUserAccess, Toast.LENGTH_SHORT).show();
-                                if (user.getAccess() != mUserAccess){
+                                Toast.makeText(DashboardActivity.this, "Welcome User : "+ user.getName() + " " + user.getAccess() + " "+ accesscode, Toast.LENGTH_SHORT).show();
+                                if (user.getAccess() != accesscode){
                                     Toast.makeText(DashboardActivity.this, "You Are Not Authorized" + user.getName() + mUserAccess, Toast.LENGTH_SHORT).show();
                                     mAuth.signOut();
                                 }

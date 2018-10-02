@@ -1,6 +1,8 @@
 package com.example.msa.timetable.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,6 +41,8 @@ public class ChoiceActivity extends AppCompatActivity {
     LinearLayout studentcard,teachercard;
     public static int mUserAccess;
     private ValueEventListener mValueEventListner;
+    private SharedPreferences mUserAccessShared;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -46,21 +50,29 @@ public class ChoiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choice);
         studentcard = (LinearLayout) findViewById(R.id.student_card);
         teachercard = (LinearLayout) findViewById(R.id.teacher_card);
+
+        mUserAccessShared = getSharedPreferences("userAccessCode", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = mUserAccessShared.edit();
+
         mAuth = FirebaseAuth.getInstance();
         mUserdatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         studentcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signin();
                 mUserAccess=-1;
+                signin();
+                editor.putInt("AccessCode",mUserAccess);
+                editor.apply();
             }
         });
 
         teachercard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signin();
                 mUserAccess=1;
+                editor.putInt("AccessCode",mUserAccess);
+                editor.apply();
+                signin();
             }
         });
 
@@ -108,6 +120,7 @@ public class ChoiceActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithCredential:success");
                             mUser = mAuth.getCurrentUser();
+
                             startActivity(new Intent(ChoiceActivity.this,DashboardActivity.class));
                             finish();
                             //updateUI(user);
