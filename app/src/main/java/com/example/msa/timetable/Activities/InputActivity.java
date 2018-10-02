@@ -262,6 +262,29 @@ public class InputActivity extends AppCompatActivity {
 
 
 }
+////Horizontal Picker For TypeofPeriod
+//        final HorizontalPicker periodtype = (HorizontalPicker) dialogview.findViewById(R.id.typepicker);
+//        final List<HorizontalPicker.PickerItem> typetextItems = new ArrayList<>();
+//        final String ptype[] = getResources().getStringArray(R.array.period_type);
+//        for(int i=0;i<=1;i++){
+//            typetextItems.add(new HorizontalPicker.TextItem(ptype[i]));
+//        }
+//        periodtype.setItems(typetextItems,0);
+// //Picker Dialog
+//        periodtype.setChangeListener(new HorizontalPicker.OnSelectionChangeListener() {
+//            @Override
+//            public void onItemSelect(HorizontalPicker horizontalPicker, int i) {
+//                HorizontalPicker.PickerItem selected = horizontalPicker.getSelectedItem();
+//                switch (selected.getText().toString()){
+//                    case "Theory":
+//                        typeofperiod = "Theory";
+//                        break;
+//                    case "Practical":
+//                        typeofperiod = "Practical";
+//                        break;
+//                }
+//            }
+//        });
 
 
 
