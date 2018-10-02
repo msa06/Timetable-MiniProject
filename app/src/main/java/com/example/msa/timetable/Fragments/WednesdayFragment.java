@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.example.msa.timetable.Activities.DayViewActivity.accesscode;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,15 +78,17 @@ public class WednesdayFragment extends Fragment {
         listView.setAdapter(mPeriodAdaptor);
 
 
-        //ON Long Press Show the Option
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Period period = periods.get(position);
-                showDialog(period);
-                return false;
-            }
-        });
+        if (accesscode==1){
+            //ON Long Press Show the Option
+            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    Period period = periods.get(position);
+                    showDialog(period);
+                    return false;
+                }
+            });
+        }
 
 
 //

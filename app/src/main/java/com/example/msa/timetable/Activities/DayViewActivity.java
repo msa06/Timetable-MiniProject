@@ -51,7 +51,7 @@ public class DayViewActivity extends AppCompatActivity implements NavigationView
     private TextView username,useremail;
     private CircularImageView userimage;
     private SharedPreferences mUserAccessShared;
-    private int accesscode;
+    public static int accesscode;
 
     @Override
     protected void onStart() {
